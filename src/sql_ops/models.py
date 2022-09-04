@@ -31,7 +31,6 @@ class NFT(Base):
     mint = Column(Date)
     highest_bid = Column(Float)
     user_bid = Column(Integer, nullable=True)
-    retired = Column(Boolean)
 
 class NFTOwners(Base):
     __tablename__ = "nft_owners"
@@ -39,5 +38,6 @@ class NFTOwners(Base):
     id = Column(Integer, primary_key=True, index=True)
     nft_id = Column(Integer)
     owner = Column(String(30))
-    stake = Column(Float)
+    stock = Column(Float)
+    retired = Column(Boolean)
 
