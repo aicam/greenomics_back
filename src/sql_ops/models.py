@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, Date
 from sqlalchemy.orm import relationship
 
-from func import Base
+from .func import Base
 
 class User(Base):
     __tablename__ = "user"
@@ -30,7 +30,7 @@ class NFT(Base):
     release = Column(Date)
     mint = Column(Date)
     highest_bid = Column(Float)
-    user_bid = Column(Integer)
+    user_bid = Column(Integer, nullable=True)
     retired = Column(Boolean)
 
 class NFTOwners(Base):
