@@ -1,0 +1,42 @@
+[
+  {
+    "company_name": "Atosa",
+    "co2": 563.3,
+    "technology": "Natural",
+    "verification": 234,
+    "price": 300000,
+    "release": "25-06-2025",
+    "mint": "22-01-2021",
+    "retired": false
+  },
+  {
+    "company_name": "Cumera",
+    "co2": 297.3,
+    "technology": "Natural",
+    "verification": 119,
+    "price": 650000,
+    "release": "25-09-2022",
+    "mint": "24-08-2021",
+    "retired": false
+  },
+  {
+    "company_name": "Vige",
+    "co2": 987,
+    "technology": "Natural",
+    "verification": 11,
+    "price": 50000,
+    "release": "12-06-2028",
+    "mint": "22-01-2020",
+    "retired": false
+  },
+  {
+    "company_name": "Helintor",
+    "co2": 1892,
+    "technology": "Industrial",
+    "verification": 976,
+    "price": 1100000,
+    "release": "01-11-2024",
+    "mint": "22-01-2022",
+    "retired": false
+  }
+]
