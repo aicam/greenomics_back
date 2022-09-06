@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from datetime import date
 from . import models
 from . import schemas
 
@@ -21,9 +21,29 @@ def add_nft_owner(db: Session, nft_id: int, stock: float, owner: str):
     new_nft_owner.nft_id = nft_id
     new_nft_owner.stock = stock
     new_nft_owner.retired = False
+    new_nft_owner.bought_date = date.today()
     db.add(new_nft_owner)
     return db.commit()
 
+def get_stock_by_id(db: Session, stock_id: int):
+    return db.query(models.NFTOwners).filter(models.NFTOwners.id == stock_id).first()
+
+def add_selling_stock(db: Session, stock_id: int, stock: float, price: float):
+    NFTOwner = db.query(models.NFTOwners).filter(models.NFTOwners.id == stock_id).first()
+    NFTOwner.stock += NFTOwner.selling_stock - stock
+    NFTOwner.selling_stock = stock
+    NFTOwner.selling_price = price
+    return db.commit()
+def cancel_selling_stock(db: Session, stock_id: int):
+    NFTOwner = db.query(models.NFTOwners).filter(models.NFTOwners.id == stock_id).first()
+    NFTOwner.stock += NFTOwner.selling_stock
+    NFTOwner.selling_stock = 0
+    NFTOwner.selling_price = 0
+    return db.commit()
+def remove_stock(db: Session, stock_id: int):
+    row = db.query(models.NFTOwners).filter(models.NFTOwners.id == stock_id).first()
+    db.delete(row)
+    return db.commit()
 def get_all_owners(db: Session):
     return db.query(models.NFTOwners).all()
 
@@ -34,3 +54,12 @@ def retire(db: Session, nft_owner_id: int):
 def add_nft(db: Session, nft: models.NFT):
     db.add(nft)
     db.commit()
+
+def update_owner_by_ui(db: Session, username: str, nft_id: int, stock: float):
+    nft_owner = db.query(models.NFTOwners).filter(models.NFTOwners.nft_id == nft_id, models.NFTOwners.owner == username).first()
+    print(nft_owner)
+    if nft_owner == None:
+        return False
+    nft_owner.stock += stock
+    db.commit()
+    return True

@@ -40,4 +40,7 @@ class NFTOwners(Base):
     owner = Column(String(30))
     stock = Column(Float)
     retired = Column(Boolean)
+    selling_stock = Column(Float, default=0)
+    selling_price = Column(Float, default=0)
+    bought_date = Column(Date)
 

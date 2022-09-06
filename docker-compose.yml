@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=greenomics
+      - MYSQL_USER=abc
+      - MYSQL_PASSWORD=123
+      - MYSQL_ROOT_PASSWORD=1234
+  server:
+    build: .
+    restart: on-failure
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
