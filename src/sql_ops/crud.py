@@ -56,10 +56,20 @@ def add_nft(db: Session, nft: models.NFT):
     db.commit()
 
 def update_owner_by_ui(db: Session, username: str, nft_id: int, stock: float):
-    nft_owner = db.query(models.NFTOwners).filter(models.NFTOwners.nft_id == nft_id, models.NFTOwners.owner == username).first()
-    print(nft_owner)
+    nft_owner = db.query(models.NFTOwners).filter(models.NFTOwners.nft_id == nft_id,
+                                                  models.NFTOwners.owner == username,
+                                                  models.NFTOwners.retired == False).first()
     if nft_owner == None:
         return False
     nft_owner.stock += stock
     db.commit()
     return True
+
+def sell_off_market(db: Session, username: str, nft_id: int, stock: float):
+    nft_owner = db.query(models.NFTOwners).filter(models.NFTOwners.nft_id == nft_id,
+                                                  models.NFTOwners.owner == username,
+                                                  models.NFTOwners.retired == False).first()
+    nft_owner.selling_stock -= stock
+    if nft_owner.selling_stock == 0 and nft_owner.stock == 0:
+        db.delete(nft_owner)
+    db.commit()

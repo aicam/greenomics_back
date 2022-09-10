@@ -40,3 +40,10 @@ def add_owner(new_owner: schemas.NewOwner, db: Session = Depends(get_db)):
         crud.add_nft_owner(db, new_owner.nft_id, new_owner.stock, new_owner.owner)
     return {"status": "Success"}
 
+@router.post("/buy/off")
+def buy_from_off(off_market: schemas.OffMarketBuy, db: Session = Depends(get_db)):
+    crud.sell_off_market(db, off_market.owner, off_market.nft_id, off_market.stock)
+    res = crud.update_owner_by_ui(db, off_market.buyer, off_market.nft_id, off_market.stock)
+    if not res:
+        crud.add_nft_owner(db, off_market.nft_id, off_market.stock, off_market.buyer)
+    return {"status": "Success"}
