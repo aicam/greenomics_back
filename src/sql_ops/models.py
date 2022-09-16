@@ -31,6 +31,7 @@ class NFT(Base):
     mint = Column(Date)
     highest_bid = Column(Float)
     user_bid = Column(Integer, nullable=True)
+    added = Column(String(30))
 
 class NFTOwners(Base):
     __tablename__ = "nft_owners"
