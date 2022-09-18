@@ -35,6 +35,11 @@ def sell(id: int, amount: float, price: float, db: Session = Depends(get_db)):
 def cancel_selling(id: int, db: Session = Depends(get_db)):
     crud.cancel_selling_stock(db, id)
     return {"status": "Success"}
+
+@router.get("/approve/nft")
+def approve_nft(id: int, db: Session = Depends(get_db)):
+    crud.approve_nft(db, id)
+    return {"status": "Success"}
 @router.post("/buy")
 def add_owner(new_owner: schemas.NewOwner, db: Session = Depends(get_db)):
     res = crud.update_owner_by_ui(db, new_owner.owner, new_owner.nft_id, new_owner.stock)

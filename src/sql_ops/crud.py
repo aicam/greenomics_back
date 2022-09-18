@@ -73,3 +73,8 @@ def sell_off_market(db: Session, username: str, nft_id: int, stock: float):
     if nft_owner.selling_stock == 0 and nft_owner.stock == 0:
         db.delete(nft_owner)
     db.commit()
+
+def approve_nft(db: Session, nft_id: int):
+    nft = db.query(models.NFT).filter(models.NFT.id == nft_id).first()
+    nft.verification += 1
+    db.commit()
